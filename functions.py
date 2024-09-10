@@ -19,11 +19,7 @@ def write_todos(todos_arg, filepath=FILEPATH):
         file.writelines(todos_arg)
 
 
-# def caculator(height, weight):
-#     cm = int(height)
-#     kg = float(weight)
-#     result = kg / (cm * cm / 10000)
-#     return result
+
 
 
 """ Jeśli chcemy nie chemy importowac funkcji w programie ale chcemy mieć 

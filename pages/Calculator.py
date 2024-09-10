@@ -1,11 +1,7 @@
 import streamlit as st
 import functions
-import time
 
 
-st.set_page_config(
-    page_title="Calculator"
-)
 # theme[]
 
 todos = functions.get_todos()
@@ -35,14 +31,19 @@ try:
     elif number < 30:
         st.write('You have class 1 obesity.')
     else:
-        st.write('You need go to see a doctor.')
+        st.write('You need go to see a doctor immediately!')
 
 except TypeError:
     st.write('Try another number')
 
 col3, col4 = st.columns(2)
-col3.text_input("Enter today`s date: ")
-col4.text_input("How do you rate your mood today from 1 to 10? ")
+date = col3.text_input("Enter today`s date: ")
+mood = col4.text_input("How do you rate your mood today from 1 to 10? ")
+
+# with open(f'{date}', 'w') as file:
+#     file.write(date.txt)
+#     file.write(mood + 2 * '\n')
+
 st.subheader("Add your meals under: ")
 
 for index, todo in enumerate(todos):
