@@ -1,18 +1,7 @@
 import streamlit as st
-import functions
-
-
-# theme[]
-
-todos = functions.get_todos()
-
-
-def add_todo():
-    todo = st.session_state["new_todo"] + "\n"
-    todos.append(todo)
-    functions.write_todos(todos)
-    st.session_state["new_todo"] = ""
-
+import pandas as pd
+import glob
+from pathlib import Path
 
 st.write('This app is to increase Your health.')
 
@@ -27,41 +16,26 @@ try:
     st.write('Your score is', number)
 
     if number <= 25:
-        st.write('Your BMI is good.')
+        st.write(""":green[Your BMI is good.]""")
     elif number < 30:
         st.write('You have class 1 obesity.')
     else:
         st.write('You need go to see a doctor immediately!')
 
 except TypeError:
-    st.write('Try another number')
+    st.write(""":red[Try another number !]""")
 
-col3, col4 = st.columns(2)
-date = col3.text_input("Enter today`s date: ")
-mood = col4.text_input("How do you rate your mood today from 1 to 10? ")
+st.subheader("Type today`s information: ")
 
-# with open(f'{date}', 'w') as file:
-#     file.write(date.txt)
-#     file.write(mood + 2 * '\n')
+with st.form(key='meal_form'):
+    col3, col4 = st.columns(2)
+    date = col3.text_input("Enter today`s date: ")
+    mood = col4.text_input("How do you rate your mood today from 1 to 10? ")
 
-st.subheader("Add your meals under: ")
+    message = st.text_area(label="", placeholder="Enter your meals here...")
 
-for index, todo in enumerate(todos):
-    checkbox = st.checkbox(todo, key=todo)
-    if checkbox:
-        todos.pop(index)
-        functions.write_todos(todos)
-        del st.session_state[todo]
-        st.rerun()
+    button = st.form_submit_button("Submit")
+    if button:
+        st.info(""":green[Your information`s was stored successfully.]""")
 
-st.text_input(label=' ', placeholder='Add meals...',
-              on_change=add_todo, key='new_todo')
 
-# save_btn = st.button('Save', type='secondary')
-
-# if save_btn:
-#     with st.spinner('Saving...'):
-#         time.sleep(3)
-    # with open(f'../journal/{date}.txt', 'w') as file:
-    # file.write(mood + 2 * '\n')
-    # file.write(thoughts)
