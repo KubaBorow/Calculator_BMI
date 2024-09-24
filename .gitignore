@@ -1,0 +1,6 @@
+venv
+.idea
+robocze pliki
+functions.py
+todos.txt
+save_dir.py

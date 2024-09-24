@@ -1,8 +1,6 @@
 import streamlit as st
-import pandas as pd
-import subprocess
-import glob
-from pathlib import Path
+from save_dir import path
+
 
 st.write('This app is to increase Your health.')
 
@@ -28,33 +26,26 @@ except TypeError:
 
 st.subheader("Type today`s information: ")
 
-# with st.form(key='meal_form'):
-#     col3, col4 = st.columns(2)
-#     date = col3.text_input("Enter today`s date: ")
-#     mood = col4.text_input("How do you rate your mood today from 1 to 10? ")
-#
-#     message = st.text_area(label="", placeholder="Enter your meals here...")
-#
-#     button = st.form_submit_button("Submit")
-#     if button:
-#         with open(f"{date}.txt, 'w") as file:
-#             file.write(mood + 2 * '\n')
-#             file.write(message)
-#         st.info(""":green[Your information`s was stored successfully.]""")
 with st.form('information_form'):
-    st.header('information_form')
+    st.header('Information Form')
 
     col1, col2 = st.columns(2)
     with col1:
-
         mood = st.slider('Today`s mood', 0, 10)
     with col2:
-        Date = st.date_input('Enter Date')
+        date = st.date_input('Enter Date')
+
+    meals = st.text_area(label="Enter your meals")
+    st.write('**Enter Date:**', date,
+             '**Mood:**', mood)
 
     submit_button = st.form_submit_button('Submit')
 
-if st.form_submit_button:
-    st.write('**Enter Date:**', Date,
-             '**Mood:**', mood)
-
-
+if submit_button:
+    with open(f'{path}{date}.txt', 'w') as file:
+        file.write(f'Today`s date is: {str(date)}' + 1 * '\n')
+        file.write(f'Your mood for today is: {str(mood)}.' + 2 * '\n')
+        file.write('Today in your menu was:\n'f"{meals}")
+        st.info(""":green[Your information was stored successfully.]""")
+else:
+    st.info(""":red[Your information`s file wasn`t created.]""")
